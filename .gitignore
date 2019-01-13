@@ -104,3 +104,6 @@ venv.bak/
 .mypy_cache/
 
 *.pem
+
+# Visual Studio Code
+.vscode
