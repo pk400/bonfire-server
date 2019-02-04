@@ -2,7 +2,7 @@ from starlette.applications import Starlette
 from starlette.responses import JSONResponse, PlainTextResponse
 import uvicorn
 
-from account import Account
+from . import Account, LocalDataBase
 
 def BonfireApplication(database):
   app = Starlette()
@@ -10,8 +10,7 @@ def BonfireApplication(database):
   @app.route('/register', methods=['POST'])
   async def register(request):
     params = await request.json()
-    account = Account(params['username'], params['email_address'],
-                      params['password'])
+    account = Account(params['username'], params['password'])
     database.store_account(account)
     return PlainTextResponse(account.username)
 
@@ -27,8 +26,8 @@ def BonfireApplication(database):
 
   @app.route('/.well-known/webfinger', methods=['GET'])
   async def webfinger(request):
-    request_email = request.query_params['resource']
-    account = database.load_account_by_email(request_email)
+    request_user = request.query_params['resource'].split(':')[1].split('@')[0]
+    account = database.load_account(request_user)
     if not account:
       return PlainTextResponse('Could not find user.')
     return JSONResponse(account.webfinger)
@@ -43,6 +42,5 @@ def BonfireApplication(database):
 
   return app
 
-from local_database import LocalDataBase
 if __name__ == '__main__':
-  uvicorn.run(BonfireApplication(LocalDataBase()))
+  uvicorn.run(BonfireApplication(LocalDataBase('https://97930398.ngrok.io')))

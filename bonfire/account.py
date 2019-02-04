@@ -1,7 +1,6 @@
 class Account:
-  def __init__(self, username, email_address, password):
+  def __init__(self, username, password):
     self._username = username
-    self._email_address = email_address
     self._password = password
     self._account_id = None
     self._webfinger = None
@@ -10,10 +9,6 @@ class Account:
   @property
   def username(self):
     return self._username
-
-  @property
-  def email_address(self):
-    return self._email_address
 
   @property
   def password(self):
@@ -34,10 +29,6 @@ class Account:
   @username.setter
   def username(self, username):
     self._username = username
-
-  @email_address.setter
-  def email_address(self, email_address):
-    self._email_address = email_address
   
   @account_id.setter
   def account_id(self, id):
