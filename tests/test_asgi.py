@@ -1,27 +1,29 @@
-import unittest
+import json
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-    '..')))
+import unittest
     
 from starlette.testclient import TestClient
 
-from bonfire.app import BonfireApplication
-from bonfire.local_database import LocalDataBase
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
+  '..')))
+from bonfire import BonfireApplication, LocalDataBase
 
 class TestAsgi(unittest.TestCase):
   def setUp(self):
-    self.database = LocalDataBase()
+    self.url = os.environ['BONFIRE_URL']
+    self.database = LocalDataBase(self.url)
     self.client = TestClient(BonfireApplication(self.database))
 
   def load_user(self):
-    account = dict(username='a', email_address='a@astraea.systems',
-                   password='pass')
+    account = dict(username='a', password='pass')
     self.client.post('/register', json=account)
+    account_in_db = self.database.load_account(account['username'])
+    self.assertEqual(account_in_db.username, account['username'])
+    self.assertEqual(account_in_db.password, account['password'])
 
   def test_register_and_login(self):
-    account = dict(username='joel', email_address='joel@astraea.systems',
-                   password='pass')
+    account = dict(username='joel', password='pass')
     response = self.client.post('/register', json=account)
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.text, account['username'])
@@ -33,9 +35,11 @@ class TestAsgi(unittest.TestCase):
   
   def test_webfinger(self):
     self.load_user()
-    params = dict(resource='a@astraea.systems')
+    account_address = '@'.join(['a', self.url.split('//')[1]])
+    params = dict(resource=':'.join(['acct', account_address]))
     response = self.client.get('/.well-known/webfinger', params=params)
-    print(response)
+    webfinger = response.json()
+    self.assertEqual(webfinger['subject'].split(':')[1], account_address)
   
   def test_users(self):
     self.load_user()
