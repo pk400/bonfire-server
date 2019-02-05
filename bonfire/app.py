@@ -41,6 +41,3 @@ def BonfireApplication(database):
     return JSONResponse(account.actor)
 
   return app
-
-if __name__ == '__main__':
-  uvicorn.run(BonfireApplication(LocalDataBase('https://97930398.ngrok.io')))
