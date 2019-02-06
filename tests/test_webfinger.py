@@ -4,7 +4,7 @@ from bonfire.webfinger import Webfinger
 
 class TestWebfinger(unittest.TestCase):
   def test_create(self):
-    subject = 'a@x.com'
+    subject = 'acct:a@x.com'
     try:
       wf = Webfinger(subject)
     except ValueError:
