@@ -20,3 +20,10 @@ class Post:
   @property
   def content(self):
     return self._content
+
+  def to_json(self):
+    return self.__dict__
+
+class EmptyPost(Post):
+  def __init__(self):
+    super().__init__(None, None, None, None)
