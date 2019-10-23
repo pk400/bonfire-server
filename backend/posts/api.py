@@ -1,3 +1,5 @@
+from posts.post import Post
+
 class PostsAPI:
   def __init__(self, data_store):
     self._post_id = 0
