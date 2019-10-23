@@ -1,4 +1,5 @@
 import asyncio
+import tempfile
 import unittest
 
 from starlette.testclient import TestClient
@@ -39,6 +40,22 @@ class TestPosts(unittest.TestCase):
       response = client.get('/posts?from=0&to=1&limit=2')
       self.assertListEqual(response.json(),
         [post.to_json() for post in [posts[0], posts[1]]])
+
+  def test_create_1_post(self):
+    data_store = LocalDataStore()
+    data_store.open()
+    app.state.api = PostsAPI(data_store)
+    temp = tempfile.NamedTemporaryFile()
+    temp.write(b'test contents')
+    temp.flush()
+    with TestClient(app) as client:
+      response = client.post('/posts', data={
+        'title': 'a',
+        'content': 'b'
+      }, files={
+        'image_file': temp
+      })
+    self.assertEqual(response.status_code, 204)
 
 if __name__ == '__main__':
   unittest.main()

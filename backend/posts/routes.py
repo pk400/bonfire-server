@@ -22,10 +22,12 @@ async def on_load_post(request):
   post = await app.state.api.load_post(int(request.path_params['post_id']))
   return JSONResponse(post.to_json())
 
-
 @app.route('/posts', methods=['POST'])
 async def on_create(request):
-  pass
+  params = await request.form()
+  await app.state.api.create_post(params['title'], params['image_file'],
+    params['content'])
+  return Response(status_code=204)
 
 @app.route('/posts', methods=['PUT'])
 async def on_update(request):
