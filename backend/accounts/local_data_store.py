@@ -5,6 +5,7 @@ from backend.utils import require_open
 
 class LocalDataStore(DataStore):
   def __init__(self):
+    super().__init__()
     self._accounts = {}
     self._email_address_to_id = {}
 
@@ -27,7 +28,8 @@ class LocalDataStore(DataStore):
 
   @require_open
   async def load_account(self, account_id):
-    return self._accounts.get(account_id, AccountEntry.NONE)
+    account_entry = self._accounts.get(account_id, AccountEntry.NONE)
+    return account_entry.account
 
   @require_open
   async def load_password(self, account_id):

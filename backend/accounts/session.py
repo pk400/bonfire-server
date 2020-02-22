@@ -8,6 +8,6 @@ class Session:
 
   def set_credentials(self, id):
     self._id = id
-  
+
   def reset_credentials(self):
     self._id = None

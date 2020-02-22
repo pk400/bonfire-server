@@ -17,7 +17,7 @@ class ServiceType:
   def open(self):
     self.startup()
     self._is_open = True
-  
+
   def close(self):
     self.shutdown()
     self._is_open = False

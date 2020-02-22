@@ -1,4 +1,7 @@
-from backend.accounts import Account, Session
+import bcrypt
+
+from backend.accounts.account import Account
+from backend.accounts.session import Session
 from backend.exceptions import BadCredentialsException
 from backend.types import SequenceGenerator, ServiceType
 from backend.utils import require_open
@@ -8,21 +11,21 @@ class Server(ServiceType):
 
   def __init__(self, data_store):
     self._data_store = data_store
-    self._account_id_generator = SequenceGenerator(0)
+    self._account_id_generator = SequenceGenerator(-1)
 
   def startup(self):
-    pass
+    self._data_store.open()
 
   def shutdown(self):
-    pass
+    self._data_store.close()
 
   @require_open
-  async def create_account(self, session, email_address, password):
-    # TODO: Validate session
-    # TODO: Hash password
-    hashed_password = None
-    await self._data_store.store_account(self._account_id_generator.generate(),
-      email_address, hashed_password)
+  async def create_account(self, email_address, password):
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    account_id = self._account_id_generator.generate()
+    await self._data_store.store_account(account_id, email_address,
+      hashed_password)
+    return account_id
 
   @require_open
   async def login(self, session, email_address, password):
