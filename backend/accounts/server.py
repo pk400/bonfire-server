@@ -1,13 +1,14 @@
 import bcrypt
 
+from backend import exceptions
 from backend.accounts.account import Account
 from backend.accounts.session import Session
-from backend.exceptions import BadCredentialsException
 from backend.types import SequenceGenerator, ServiceType
 from backend.utils import require_open
 
 class Server(ServiceType):
   LOGIN_FAILED = 0
+  SESSION_LOGGED_IN = 1
 
   def __init__(self, data_store):
     self._data_store = data_store
@@ -29,12 +30,18 @@ class Server(ServiceType):
 
   @require_open
   async def login(self, session, email_address, password):
-    # TODO: Validate session
+    login_success = False
+    if session != Session.NONE:
+      raise exceptions.SessionLoggedInException('Session is already logged in.',
+        Server.SESSION_LOGGED_IN)
     account_id = await self._data_store.load_account_id_by_email(email_address)
-    if account_id == -1:
-      raise BadCredentialsException('Login failed.', Server.LOGIN_FAILED)
     hashed_password = await self._data_store.load_password(account_id)
-    # TODO: Compare unhashed password
+    if bcrypt.checkpw(password, hashed_password):
+      session.set_credentials(account_id)
+      login_success = True
+    if not login_success:
+      raise exceptions.BadCredentialsException('Login failed.',
+        Server.LOGIN_FAILED)
 
   @require_open
   async def logout(self, session):
