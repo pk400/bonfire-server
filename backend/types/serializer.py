@@ -13,8 +13,9 @@ class Serializer:
         return obj
       if isinstance(obj, dict):
         return dict_to_json(obj)
-      raise SerializerNotSupported(f'{obj.__class__.__name__} does not implement
-        to_json.', Serializer.UNSUPPORTED_SERIALIZATION)
+      raise SerializerNotSupported(
+        f'{obj.__class__.__name__} does not implement to_json.',
+        Serializer.UNSUPPORTED_SERIALIZATION)
 
   @staticmethod
   def dict_to_json(obj):
@@ -28,5 +29,6 @@ class Serializer:
     except AttributeError:
       if isinstance(to_type, (str, int)):
         return to_type(obj)
-      raise SerializerNotSupported(f'{obj.__class__.__name__} does not implement
-        from_json.', Serializer.UNSUPPORTED_SERIALIZATION)
+      raise SerializerNotSupported(
+        f'{obj.__class__.__name__} does not implement from_json.',
+        Serializer.UNSUPPORTED_SERIALIZATION)

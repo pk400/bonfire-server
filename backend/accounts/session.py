@@ -16,10 +16,15 @@ class Session:
 
   def to_json(self):
     return Serializer.dict_to_json({
-      'id': self._id 
+      'id': self._id
     })
 
   def from_json(self, mapping):
     session = Session()
     session.set_credentials(Serializer.from_json(mapping['id'], int))
     return session
+
+  def __eq__(self, other):
+    return self._id == other.id
+
+Session.EMPTY = Session()
