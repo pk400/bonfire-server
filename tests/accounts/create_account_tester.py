@@ -2,9 +2,7 @@ import asyncio
 import unittest
 
 from backend.accounts import LocalDataStore, Server
-
-def run_in_loop(coro):
-  return asyncio.get_event_loop().run_until_complete(coro)
+from backend.utils import run_in_loop
 
 class CreateAccountTester(unittest.TestCase):
   def test_success(self):

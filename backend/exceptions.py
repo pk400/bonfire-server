@@ -21,3 +21,9 @@ class BadCredentialsException(BonfireException):
 
 class ServiceNotOpenException(BonfireException):
   pass
+
+class SessionLoggedInException(BonfireException):
+  pass
+
+class SerializerNotSupported(BonfireException):
+  pass
