@@ -11,4 +11,5 @@ class Account:
   def email_address(self):
     return self._email_address
 
+
 Account.NONE = Account(-1, '')

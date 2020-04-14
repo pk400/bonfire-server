@@ -1,4 +1,5 @@
-from backend.types.serializer import Serializer
+from server.types.serializer import Serializer
+
 
 class Session:
   def __init__(self):
@@ -26,5 +27,6 @@ class Session:
 
   def __eq__(self, other):
     return self._id == other.id
+
 
 Session.EMPTY = Session()

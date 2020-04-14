@@ -3,13 +3,13 @@ import unittest
 
 import bcrypt
 
-from backend import exceptions
-from backend.accounts.account import Account
-from backend.accounts.account_entry import AccountEntry
-from backend.accounts.local_data_store import LocalDataStore
-from backend.accounts.server import Server
-from backend.accounts.session import Session
-from backend.utils import run_in_loop
+from server import exceptions
+from server.accounts.account import Account
+from server.accounts.account_entry import AccountEntry
+from server.accounts.local_data_store import LocalDataStore
+from server.accounts.server import Server
+from server.accounts.session import Session
+from server.utils import run_in_loop
 
 MockAccountData = \
   collections.namedtuple('MockAccountData', ['id', 'email_address', 'password'])
