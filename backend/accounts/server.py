@@ -10,8 +10,9 @@ class Server(ServiceType):
   LOGIN_FAILED = 0
   SESSION_LOGGED_IN = 1
 
-  def __init__(self, data_store):
+  def __init__(self, data_store, password_hasher):
     self._data_store = data_store
+    self._password_hasher = password_hasher
     self._account_id_generator = SequenceGenerator(-1)
 
   def startup(self):
