@@ -1,5 +1,5 @@
-from server.types.password_hasher.password_hasher import PasswordHasher
 from server.types import SequenceGenerator
+from server.types.password_hasher.password_hasher import PasswordHasher
 
 
 class TestPasswordHasher(PasswordHasher):
