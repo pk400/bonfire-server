@@ -1,9 +1,9 @@
 import unittest
 
 from server import exceptions
-from server.accounts.local_data_store import LocalDataStore
-from server.accounts.server import Server
-from server.accounts.session import Session
+from server.services.accounts.local_data_store import LocalDataStore
+from server.services.accounts.server import Server
+from server.services.accounts.session import Session
 from server.types import TestPasswordHasher
 from server.utils import run_in_loop
 

@@ -1,4 +1,4 @@
-from server.accounts import Account
+from server.services.accounts import Account
 
 
 class AccountEntry:
