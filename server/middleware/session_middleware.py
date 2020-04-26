@@ -1,7 +1,7 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from backend.accounts.session import Session
-from backend.types.serializer import Serializer
+from server.accounts.session import Session
+from server.types.serializer import Serializer
 
 class SessionMiddleware(BaseHTTPMiddleware):
   def __init__(self, app, cookie_name):

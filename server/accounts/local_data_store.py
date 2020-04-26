@@ -1,7 +1,8 @@
-from backend.accounts import Account
-from backend.accounts.account_entry import AccountEntry
-from backend.accounts.data_store import DataStore
-from backend.utils import require_open
+from server.accounts import Account
+from server.accounts.account_entry import AccountEntry
+from server.accounts.data_store import DataStore
+from server.utils import require_open
+
 
 class LocalDataStore(DataStore):
   def __init__(self):
@@ -22,8 +23,8 @@ class LocalDataStore(DataStore):
 
   @require_open
   async def store_account(self, account_id, email_address, hashed_password):
-    self._accounts[account_id] = \
-      AccountEntry(Account(account_id, email_address), hashed_password)
+    self._accounts[account_id] = AccountEntry(
+      Account(account_id, email_address), hashed_password)
     self._email_address_to_id[email_address] = account_id
 
   @require_open

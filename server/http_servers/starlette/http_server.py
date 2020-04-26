@@ -2,7 +2,7 @@ from starlette import status
 from starlette.applications import Starlette
 from starlette.responses import Response
 
-from backend.accounts import Server, LocalDataStore
+from server.accounts import Server, LocalDataStore
 
 StarletteHttpServer = Starlette()
 

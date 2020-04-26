@@ -1,4 +1,5 @@
-from backend.types import ServiceType
+from server.types import ServiceType
+
 
 class DataStore(ServiceType):
   async def store_account(self, id, email_address, password):

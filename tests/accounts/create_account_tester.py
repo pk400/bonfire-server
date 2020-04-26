@@ -1,10 +1,9 @@
 import asyncio
 import unittest
 
-from backend.accounts import LocalDataStore, Server
+from server.accounts import LocalDataStore, Server
+from server.utils import run_in_loop
 
-def run_in_loop(coro):
-  return asyncio.get_event_loop().run_until_complete(coro)
 
 class CreateAccountTester(unittest.TestCase):
   def test_success(self):
@@ -16,6 +15,7 @@ class CreateAccountTester(unittest.TestCase):
     self.assertEqual(account.id, 0)
     self.assertEqual(account.email_address, 'a')
     server.close()
+
 
 if __name__ == '__main__':
   unittest.main()

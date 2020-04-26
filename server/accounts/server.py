@@ -1,10 +1,10 @@
 import bcrypt
 
-from backend import exceptions
-from backend.accounts.account import Account
-from backend.accounts.session import Session
-from backend.types import SequenceGenerator, ServiceType
-from backend.utils import require_open
+from server import exceptions
+from server.accounts.session import Session
+from server.types import SequenceGenerator, ServiceType
+from server.utils import require_open
+
 
 class Server(ServiceType):
   LOGIN_FAILED = 0
@@ -32,12 +32,12 @@ class Server(ServiceType):
   @require_open
   async def login(self, session, email_address, password):
     login_success = False
-    if session != Session.NONE:
+    if session != Session.EMPTY:
       raise exceptions.SessionLoggedInException('Session is already logged in.',
         Server.SESSION_LOGGED_IN)
     account_id = await self._data_store.load_account_id_by_email(email_address)
     hashed_password = await self._data_store.load_password(account_id)
-    if bcrypt.checkpw(password, hashed_password):
+    if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
       session.set_credentials(account_id)
       login_success = True
     if not login_success:
