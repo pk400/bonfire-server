@@ -1,79 +1,36 @@
-import collections
 import unittest
-import unittest.mock
-
-import bcrypt
 
 from server import exceptions
-from server.accounts.account import Account
-from server.accounts.account_entry import AccountEntry
 from server.accounts.local_data_store import LocalDataStore
 from server.accounts.server import Server
 from server.accounts.session import Session
+from server.types import TestPasswordHasher
 from server.utils import run_in_loop
 
-MockAccountData = \
-  collections.namedtuple('MockAccountData', ['id', 'email_address', 'password'])
 
-
-class HashedPasswordStore:
-  def __init__(self):
-    self._hashed_passwords = {}
-    self._id = 0
-
-  def hashpw(self, password):
-    _id = self._id
-    self._hash[_id] = password
-    self._id += 1
-    return _id
-
-  def checkpw(self, _hash):
-    print(self._hashed_passwords)
-    print(_hash.decode('utf-8'))
-    return _hash.decode('utf-8') in self._hashed_passwords
-
-  def gensalt(self):
-    pass
-
-
-@unittest.mock.patch('server.accounts.server.bcrypt', HashedPasswordStore)
 class LoginTester(unittest.TestCase):
   def setUp(self):
     self.data_store = LocalDataStore()
-    self.server = Server(self.data_store)
+    self.server = Server(self.data_store, TestPasswordHasher())
     self.server.open()
+    run_in_loop(self.server.create_account('a', 'b'))
 
   def tearDown(self):
     self.server.close()
 
   def test_success(self):
-    data = MockAccountData(99, 'a', 'b')
-    hashed = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())
-    self.data_store._accounts[data.id] = \
-      AccountEntry(Account(data.id, data.email_address), hashed)
-    self.data_store._email_address_to_id[data.email_address] = data.id
-    run_in_loop(self.server.login(Session(), data.email_address, data.password))
+    result = run_in_loop(self.server.login(Session(), 'a', 'b'))
+    self.assertTrue(result)
 
   def test_bad_credentials(self):
-    data = MockAccountData(99, 'a', 'b')
-    hashed = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())
-    self.data_store._accounts[data.id] = \
-      AccountEntry(Account(data.id, data.email_address), hashed)
-    self.data_store._email_address_to_id[data.email_address] = data.id
-    with self.assertRaises(exceptions.BadCredentialsException) as error:
-      run_in_loop(self.server.login(Session(), data.email_address, 'bad'))
-    self.assertEqual(error.exception.code, Server.LOGIN_FAILED)
+    with self.assertRaises(exceptions.BadCredentialsException):
+      run_in_loop(self.server.login(Session(), 'a', 'z'))
 
   def test_already_logged_in(self):
-    data = MockAccountData(99, 'a', 'b')
-    hashed = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())
-    self.data_store._accounts[data.id] = \
-      AccountEntry(Account(data.id, data.email_address), hashed)
     session = Session()
-    session.set_credentials(data.id)
-    with self.assertRaises(exceptions.SessionLoggedInException) as error:
-      run_in_loop(self.server.login(session, data.email_address, data.password))
-    self.assertEqual(error.exception.code, Server.SESSION_LOGGED_IN)
+    run_in_loop(self.server.login(session, 'a', 'b'))
+    with self.assertRaises(exceptions.SessionLoggedInException):
+      run_in_loop(self.server.login(session, 'a', 'b'))
 
 
 if __name__ == '__main__':

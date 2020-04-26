@@ -1,4 +1,5 @@
 from server.types.password_hasher.password_hasher import PasswordHasher
+from server.types import SequenceGenerator
 
 
 class TestPasswordHasher(PasswordHasher):
@@ -6,15 +7,14 @@ class TestPasswordHasher(PasswordHasher):
 
   def __init__(self):
     '''Constructs a SimplePasswordHasher.'''
-    self._seq_id_to_password = {}
-    self._seq_id = 0
+    self._sequence_id_to_password = {}
+    self._sequence_generator = SequenceGenerator()
 
   def hash_password(self, plaintext_password: str):
-    seq_id = self._seq_id
-    self._seq_id_to_password[seq_id] = plaintext_password
-    self._seq_id += 1
-    return seq_id
-
+    sequence_id = self._sequence_generator.generate()
+    self._sequence_id_to_password[sequence_id] = plaintext_password
+    return bytes([sequence_id])
 
   def check_password(self, plaintext_password: str, hashed_password: bytes):
-    pass
+    sequence_id = int.from_bytes(hashed_password, 'big')
+    return self._sequence_id_to_password[sequence_id] == plaintext_password

@@ -23,26 +23,26 @@ class Server(ServiceType):
 
   @require_open
   async def create_account(self, email_address, password):
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     account_id = self._account_id_generator.generate()
     await self._data_store.store_account(account_id, email_address,
-      hashed_password)
+      self._password_hasher.hash_password(password))
     return account_id
 
   @require_open
   async def login(self, session, email_address, password):
     login_success = False
     if session != Session.EMPTY:
-      raise exceptions.SessionLoggedInException('Session is already logged in.',
-        Server.SESSION_LOGGED_IN)
+      raise exceptions.SessionLoggedInException(
+        'Session is already logged in.', Server.SESSION_LOGGED_IN)
     account_id = await self._data_store.load_account_id_by_email(email_address)
     hashed_password = await self._data_store.load_password(account_id)
-    if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
+    if self._password_hasher.check_password(password, hashed_password):
       session.set_credentials(account_id)
       login_success = True
     if not login_success:
       raise exceptions.BadCredentialsException('Login failed.',
         Server.LOGIN_FAILED)
+    return login_success
 
   @require_open
   async def logout(self, session):
