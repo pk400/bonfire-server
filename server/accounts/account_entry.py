@@ -1,4 +1,5 @@
-from backend.accounts import Account
+from server.accounts import Account
+
 
 class AccountEntry:
   def __init__(self, account, password):
@@ -12,5 +13,6 @@ class AccountEntry:
   @property
   def password(self):
     return self._password
+
 
 AccountEntry.NONE = AccountEntry(Account.NONE, b'')

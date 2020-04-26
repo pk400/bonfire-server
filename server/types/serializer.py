@@ -1,4 +1,4 @@
-from backend.exceptions import SerializerNotSupported
+from server.exceptions import SerializerNotSupported
 
 class Serializer:
   UNSUPPORTED_SERIALIZATION = 0

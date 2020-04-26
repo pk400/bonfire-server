@@ -1,10 +1,10 @@
 import bcrypt
 
-from backend import exceptions
-from backend.accounts.account import Account
-from backend.accounts.session import Session
-from backend.types import SequenceGenerator, ServiceType
-from backend.utils import require_open
+from server import exceptions
+from server.accounts.session import Session
+from server.types import SequenceGenerator, ServiceType
+from server.utils import require_open
+
 
 class Server(ServiceType):
   LOGIN_FAILED = 0
