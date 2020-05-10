@@ -1,6 +1,6 @@
 import bcrypt
 
-from server.types.password_hasher.password_hasher import PasswordHasher
+from library.password_hasher.password_hasher import PasswordHasher
 
 
 class BcryptPasswordHasher(PasswordHasher):

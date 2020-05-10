@@ -1,6 +1,6 @@
 import asyncio
 
-from server.exceptions import ServiceNotOpenException, ExceptionCodes
+from exceptions import ServiceNotOpenException, ExceptionCodes
 
 def require_open(inner):
   def wrapper(self, *args, **kwargs):

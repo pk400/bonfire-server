@@ -1,7 +1,7 @@
-from server import exceptions
-from server.services.accounts.session import Session
-from server.types import SequenceGenerator, ServiceType
-from server.utils import require_open
+import exceptions
+from services.accounts.session import Session
+from library import SequenceGenerator, ServiceType
+from utils import require_open
 
 
 class Server(ServiceType):

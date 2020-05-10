@@ -1,4 +1,4 @@
-from server.types.serializer import Serializer
+from library.serializer import Serializer
 
 class JRD:
   def __init__(self, subject, alias, properties, links):

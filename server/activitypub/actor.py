@@ -1,4 +1,4 @@
-from server.activitypub.object import Object
+from activitypub.object import Object
 
 
 class Actor(Object):

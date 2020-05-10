@@ -1,1 +1,1 @@
-web: python -m server.applications.accounts_service.app -c server/applications/accounts_service/config.yml
+web: python -m applications.accounts_service.app -c applications/accounts_service/config.yml

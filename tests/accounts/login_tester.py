@@ -1,11 +1,11 @@
 import unittest
 
 from server import exceptions
-from server.services.accounts.local_data_store import LocalDataStore
-from server.services.accounts.server import Server
-from server.services.accounts.session import Session
-from server.types import TestPasswordHasher
-from server.utils import run_in_loop
+from services.accounts.local_data_store import LocalDataStore
+from services.accounts.server import Server
+from services.accounts.session import Session
+from types import TestPasswordHasher
+from utils import run_in_loop
 
 
 class LoginTester(unittest.TestCase):

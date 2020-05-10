@@ -3,7 +3,7 @@ from starlette.applications import Starlette
 from starlette.responses import Response
 from starlette.routing import Route
 
-from server.services.accounts.server import Server
+from services.accounts.server import Server
 
 
 class HttpServer:

@@ -12,6 +12,7 @@ mccabe==0.6.1
 pycodestyle==2.5.0
 pycparser==2.19
 pyflakes==2.1.1
+PyYAML==5.3.1
 requests==2.23.0
 six==1.14.0
 starlette==0.13.2
