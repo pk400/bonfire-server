@@ -23,6 +23,8 @@ def main():
   server.open()
   http_server = HttpServer(server)
   port = int(os.environ.get('PORT', configs['port']))
+  print(port)
+  print(os.environ)
   uvicorn.run(http_server.app, host=configs['host'], port=port)
 
 
