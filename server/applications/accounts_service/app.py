@@ -23,7 +23,7 @@ def main():
   server.open()
   http_server = HttpServer(server)
   uvicorn.run(http_server.app, host=configs['host'],
-    port=int(os.environ['PORT'] if configs['port'] == 0 else configs['port']))
+    port=int(os.environ['PORT'] if configs['port'] == '0' else configs['port']))
 
 
 if __name__ == '__main__':
