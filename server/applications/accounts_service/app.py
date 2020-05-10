@@ -22,10 +22,7 @@ def main():
   server = Server(data_store, password_hasher)
   server.open()
   http_server = HttpServer(server)
-  if 'PORT' in os.environ:
-    port = int(os.environ['PORT'])
-  else:
-    port = int(configs['port'])
+  port = int(os.environ.get('PORT', configs['port']))
   uvicorn.run(http_server.app, host=configs['host'], port=port)
 
 
