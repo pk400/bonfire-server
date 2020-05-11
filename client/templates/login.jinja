@@ -3,7 +3,7 @@
 {% block middle_content %}
 <div class="content-box p-20">
   <h1 class="page-title">Login</h1>
-  <form>
+  <form action="{{ login_url }}" method="post">
     <div class="form-group">
       <label for="">Email Address</label><input type="text" />
     </div>

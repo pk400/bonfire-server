@@ -18,7 +18,8 @@ async def on_register(request):
 
 async def on_login(request):
   return templates.TemplateResponse('login.jinja', {
-    'request': request
+    'request': request,
+    'login_url': config['accounts_url'] + '/login'
   })
 
 

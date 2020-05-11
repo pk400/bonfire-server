@@ -8,17 +8,15 @@ class HttpServer:
   def __init__(self, server):
     self._server = server
     self._app = Starlette(routes=[
-      Route('/create_account', self._on_create_account, name='create_account'),
-      Route('/login', self._on_login, name='login'),
-      Route('/logout', self._on_logout, name='logout')
+      Route('/create_account', self._on_create_account, methods=['POST'],
+        name='create_account'),
+      Route('/login', self._on_login, methods=['POST'], name='login'),
+      Route('/logout', self._on_logout, methods=['POST'], name='logout')
     ], on_startup=[self._startup])
 
   @property
   def app(self):
     return self._app
-
-  async def _startup(self):
-    print('okay let\'s go!')
 
   async def _on_create_account(self, request):
     params = await request.json()
