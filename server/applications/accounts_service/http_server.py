@@ -1,6 +1,6 @@
 from starlette import status
 from starlette.applications import Starlette
-from starlette.responses import Response
+from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 
 
@@ -12,7 +12,7 @@ class HttpServer:
         name='create_account'),
       Route('/login', self._on_login, methods=['POST'], name='login'),
       Route('/logout', self._on_logout, methods=['POST'], name='logout')
-    ], on_startup=[self._startup])
+    ])
 
   @property
   def app(self):
@@ -20,9 +20,10 @@ class HttpServer:
 
   async def _on_create_account(self, request):
     params = await request.json()
-    await self._server.create_account(request.state.session,
-      params['email_address'], params['password'], params['confirm_password'])
-    return Response(status_code=status.HTTP_201_CREATED)
+    account_id = await self._server.create_account(request.state.session,
+      params['email_address'], params['password'])
+    return JSONResponse({'account_id': account_id},
+      status_code=status.HTTP_201_CREATED)
 
   async def _on_login(self, request):
     params = await request.json()
