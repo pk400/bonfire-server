@@ -7,8 +7,7 @@ import yaml
 from applications.accounts_service.http_server import HttpServer
 from services.accounts.server import Server
 from services.accounts.local_data_store import LocalDataStore
-from library.password_hasher.bcrypt_password_hasher import \
-  BcryptPasswordHasher
+from library.password_hasher.bcrypt_password_hasher import BcryptPasswordHasher
 
 
 def main():
@@ -23,9 +22,7 @@ def main():
   server.open()
   http_server = HttpServer(server)
   port = int(os.environ.get('PORT', configs['port']))
-  print(port)
-  print(os.environ)
-  uvicorn.run(http_server.app, host=configs['host'], port=port)
+  uvicorn.run(http_server.app, host=configs['host'], port=port, log_level='info')
 
 
 if __name__ == '__main__':

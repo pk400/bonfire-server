@@ -3,8 +3,6 @@ from starlette.applications import Starlette
 from starlette.responses import Response
 from starlette.routing import Route
 
-from services.accounts.server import Server
-
 
 class HttpServer:
   def __init__(self, server):
@@ -13,11 +11,14 @@ class HttpServer:
       Route('/create_account', self._on_create_account, name='create_account'),
       Route('/login', self._on_login, name='login'),
       Route('/logout', self._on_logout, name='logout')
-    ])
+    ], on_startup=[self._startup])
 
   @property
   def app(self):
     return self._app
+
+  async def _startup(self):
+    print('okay let\'s go!')
 
   async def _on_create_account(self, request):
     params = await request.json()
