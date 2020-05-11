@@ -1,1 +1,1 @@
-web: python -m applications.accounts_service.app -c applications/accounts_service/config.yml
+web: uvicorn applications.accounts_service.app:app --host 0.0.0.0 --port ${PORT}
