@@ -1,22 +1,27 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from accounts.session import Session
+from services.accounts.session import Session
+from library.jwt import JWTDecodeError
 from library.serializer import Serializer
 
+
 class SessionMiddleware(BaseHTTPMiddleware):
-  def __init__(self, app, cookie_name):
-    self._app = app
+  def __init__(self, app, cookie_name, jwt):
+    super().__init__(app)
     self._cookie_name = cookie_name
+    self._jwt = jwt
 
-  def __call__(self, request, call_next):
-    if self._cookie_name in request.cookies:
-      request.state.session = \
-        Serializer.from_json(request.cookies[self._cookie_name], Session)
-    else:
-      request.state.session = Session()
+  async def dispatch(self, request, call_next):
+    cookie_data = request.cookies.get(self._cookie_name, '')
+    try:
+      payload = self._jwt.decode(cookie_data)
+      print(payload)
+      session = Serializer.from_json(payload, Session)
+    except JWTDecodeError:
+      session = Session()
+    request.scope['session'] = session
     response = await call_next(request)
-    if 'session' in request.state:
-      response.set_cookie(self._cookie_name,
-        Serializer.to_json(request.state.session))
+    if session.is_modified:
+      token = self._jwt.encode(session)
+      response.set_cookie(self._cookie_name, token)
     return response
-

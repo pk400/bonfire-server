@@ -24,6 +24,7 @@ class Serializer:
   @staticmethod
   def from_json(obj, to_type):
     try:
+      print(to_type.getattr('from_json'))
       serializer = to_type.getattr('from_json')
       return serializer(obj)
     except AttributeError:

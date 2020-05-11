@@ -1,7 +1,10 @@
 from starlette import status
 from starlette.applications import Starlette
+from starlette.middleware import Middleware
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
+
+from middleware.session_middleware import SessionMiddleware
 
 
 class HttpServer:
@@ -12,7 +15,7 @@ class HttpServer:
         name='create_account'),
       Route('/login', self._on_login, methods=['POST'], name='login'),
       Route('/logout', self._on_logout, methods=['POST'], name='logout')
-    ])
+    ], middleware=[Middleware(SessionMiddleware, cookie_name='jwt')])
 
   @property
   def app(self):
