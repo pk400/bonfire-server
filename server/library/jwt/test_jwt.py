@@ -1,9 +1,11 @@
-from library.generators.sequence_generator import SequenceGenerator
-from library.jwt import ErrorCode, InvalidTokenError, JWTInterface
+from library.generators import SequenceGenerator
+from library.jwt import JWTDecodeError, JWTInterface
 
 
 class TestJWT(JWTInterface):
   '''JWT implementation for testing.'''
+
+  INVALID_TOKEN = 0
 
   def __init__(self):
     '''Constructs a TestJWT.'''
@@ -17,6 +19,6 @@ class TestJWT(JWTInterface):
 
   def decode(self, token):
     if token not in self._token_to_data:
-      raise InvalidTokenError(f'Failed to decode token: {token}',
-        ErrorCode.INVALID_TOKEN)
+      raise JWTDecodeError(f'Failed to decode token: {token}',
+        TestJWT.INVALID_TOKEN)
     return self._token_to_data[token]

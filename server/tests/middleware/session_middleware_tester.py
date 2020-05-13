@@ -7,8 +7,8 @@ from starlette.routing import Route
 from starlette.testclient import TestClient
 
 from library.jwt import TestJWT
-from library.mutable_session import MutableSession
-from middleware.session_middleware import SessionMiddleware
+from library.middleware import SessionMiddleware
+from library.types import MutableSession
 
 
 class MockSession(MutableSession):

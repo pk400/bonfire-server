@@ -1,4 +1,4 @@
-from services.accounts import Account
+from library.accounts.account import Account
 
 
 class AccountEntry:

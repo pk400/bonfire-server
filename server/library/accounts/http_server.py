@@ -4,7 +4,7 @@ from starlette.middleware import Middleware
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 
-from middleware.session_middleware import SessionMiddleware
+from library.middleware import SessionMiddleware
 
 
 class HttpServer:

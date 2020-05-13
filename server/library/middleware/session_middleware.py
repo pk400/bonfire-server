@@ -1,6 +1,6 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from services.accounts.session import Session
+from library.accounts.session import Session
 from library.jwt import JWTDecodeError
 from library.serializer import Serializer
 

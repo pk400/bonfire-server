@@ -1,7 +1,7 @@
-from services.accounts import Account
-from services.accounts.account_entry import AccountEntry
-from services.accounts.data_store import DataStore
-from utils import require_open
+from library.accounts.account import Account
+from library.accounts.account_entry import AccountEntry
+from library.accounts.data_store import DataStore
+from library.utils import require_open
 
 
 class LocalDataStore(DataStore):

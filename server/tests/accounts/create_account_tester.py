@@ -1,8 +1,9 @@
 import unittest
 
-from services.accounts import LocalDataStore, Server
-from library import TestPasswordHasher
-from utils import run_in_loop
+from library.accounts.local_data_store import LocalDataStore
+from library.accounts.server import Server
+from library.password_hasher.test_password_hasher import TestPasswordHasher
+from library.utils import run_in_loop
 
 
 class CreateAccountTester(unittest.TestCase):

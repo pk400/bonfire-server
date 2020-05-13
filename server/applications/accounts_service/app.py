@@ -1,6 +1,6 @@
-from applications.accounts_service.http_server import HttpServer
-from services.accounts.server import Server
-from services.accounts.local_data_store import LocalDataStore
+from library.accounts.http_server import HttpServer
+from library.accounts.local_data_store import LocalDataStore
+from library.accounts.server import Server
 from library.password_hasher.bcrypt_password_hasher import BcryptPasswordHasher
 
 

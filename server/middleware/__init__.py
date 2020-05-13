@@ -1,1 +1,0 @@
-from middleware.session_middleware import SessionMiddleware

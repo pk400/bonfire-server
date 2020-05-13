@@ -1,5 +1,6 @@
 from library.serializer import Serializer
 
+
 class JRD:
   def __init__(self, subject, alias, properties, links):
     self._subject = subject

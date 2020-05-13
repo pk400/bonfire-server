@@ -1,6 +1,6 @@
 import enum
 
-import exceptions
+from library import exceptions
 
 
 class ErrorCode(enum.Enum):

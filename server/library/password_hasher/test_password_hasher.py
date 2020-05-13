@@ -1,5 +1,5 @@
-from library import SequenceGenerator
-from library.password_hasher.password_hasher import PasswordHasher
+from library.generators import SequenceGenerator
+from library.password_hasher import PasswordHasher
 
 
 class TestPasswordHasher(PasswordHasher):

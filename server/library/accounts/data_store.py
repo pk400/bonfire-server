@@ -1,4 +1,4 @@
-from library import ServiceType
+from library.types import ServiceType
 
 
 class DataStore(ServiceType):

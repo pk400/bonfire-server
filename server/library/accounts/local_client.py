@@ -1,6 +1,6 @@
-from services.accounts.client import Client
-from services.accounts.session import Session
-from exceptions import BadCredentialsException
+from library.accounts.client import Client
+from library.accounts.session import Session
+from library.exceptions import BadCredentialsException
 
 
 class LocalClient(Client):

@@ -1,4 +1,5 @@
-from exceptions import SerializerNotSupported
+from library.exceptions import SerializerNotSupported
+
 
 class Serializer:
   UNSUPPORTED_SERIALIZATION = 0
