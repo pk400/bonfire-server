@@ -5,14 +5,13 @@ from library.utils import require_open
 
 
 class AccountEntry:
-  def __init__(self, account_id, account, hashed_password):
-    self._account_id = account_id
+  def __init__(self, account, hashed_password):
     self._account = account
     self._hashed_password = hashed_password
 
   @property
   def account_id(self):
-    return self._account_id
+    return self._account.id
 
   @property
   def email_address(self):
@@ -27,7 +26,7 @@ class AccountEntry:
     return self._hashed_password
 
 
-AccountEntry.NONE = AccountEntry(Account.NONE.id, Account.NONE, '')
+AccountEntry.NONE = AccountEntry(Account.NONE, '')
 
 
 class LocalDataStore(DataStore):
@@ -49,7 +48,7 @@ class LocalDataStore(DataStore):
   @require_open
   async def store_account(self, account_id, email_address, hashed_password):
     account = Account(account_id, email_address)
-    self._accounts.add(AccountEntry(account_id, account, hashed_password))
+    self._accounts.add(AccountEntry(account, hashed_password))
 
   @require_open
   async def load_account(self, account_id):
