@@ -1,7 +1,20 @@
 from library.accounts.account import Account
-from library.accounts.account_entry import AccountEntry
 from library.accounts.data_store import DataStore
 from library.utils import require_open
+
+
+class AccountEntry:
+  def __init__(self, account, password):
+    self._account = account
+    self._password = password
+
+  @property
+  def account(self):
+    return self._account
+
+  @property
+  def password(self):
+    return self._password
 
 
 class LocalDataStore(DataStore):
