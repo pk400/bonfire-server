@@ -1,33 +1,15 @@
-import abc
+import jwt
+
+from library.jwt.jwt_interface import JWTInterface
 
 
-class JWT(abc.ABC):
-  '''Interface for encoding and decoding JSON Web Tokens.'''
+class JWT(JWTInterface):
+  def __init__(self, secret, algorithms=['HS256']):
+    self._secret = secret
+    self._algorithms = algorithms
 
-  def encode(self, data):
-    '''Encodes data to a JWT.
-
-    Args:
-      data (Object): The data to encode.
-
-    Raises:
-      jwt.JWTEncodeError: Failed to encode the data.
-
-    Returns:
-      str: The encoded JWT string.
-    '''
-    raise NotImplementedError()
+  def encode(self, json_data, algorithm='HS256'):
+    return jwt.encode(json_data, self._secret, algorithm=algorithm)
 
   def decode(self, token):
-    '''Decodes data from a JWT.
-
-    Args:
-      token (str): The encoded JWT string.
-
-    Raises:
-      jwt.InvalidTokenError: Token is not a valid JWT.
-
-    Returns:
-      Object: The decoded data.
-    '''
-    raise NotImplementedError()
+    return jwt.decode(token, self._secret, algorithms=self._algorithms)

@@ -1,7 +1,7 @@
 import unittest
 
 from services.accounts import LocalDataStore, Server
-from types import TestPasswordHasher
+from library import TestPasswordHasher
 from utils import run_in_loop
 
 

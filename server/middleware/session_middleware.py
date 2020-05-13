@@ -15,13 +15,13 @@ class SessionMiddleware(BaseHTTPMiddleware):
     cookie_data = request.cookies.get(self._cookie_name, '')
     try:
       payload = self._jwt.decode(cookie_data)
-      print(payload)
       session = Serializer.from_json(payload, Session)
     except JWTDecodeError:
       session = Session()
     request.scope['session'] = session
     response = await call_next(request)
     if session.is_modified:
-      token = self._jwt.encode(session)
+      payload = Serializer.to_json(session)
+      token = self._jwt.encode(payload)
       response.set_cookie(self._cookie_name, token)
     return response

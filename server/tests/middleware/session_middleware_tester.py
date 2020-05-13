@@ -2,7 +2,7 @@ import unittest
 
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
-from starlette.responses import Response
+from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 from starlette.testclient import TestClient
 
@@ -61,7 +61,7 @@ class SessionMiddlewareTester(unittest.TestCase):
       return Response(status_code=200)
 
     async def r2(request):
-      return Response(request.session.id, status_code=200)
+      return JSONResponse({'id': request.session.id}, status_code=200)
 
     cookie_name = 'x'
     app = Starlette(routes=[Route('/r1', r1), Route('/r2', r2)],
@@ -72,9 +72,8 @@ class SessionMiddlewareTester(unittest.TestCase):
       self.assertIn(cookie_name, response.cookies)
       self.assertIn(cookie_name, client.cookies)
       response = client.get('/r2')
-      session_id = response.text()
+      session_id = response.json()['id']
       self.assertEqual(session_id, 99)
-
 
 
 if __name__ == '__main__':
