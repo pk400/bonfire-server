@@ -7,7 +7,7 @@ from bonfire.library.utils import run_in_loop
 from tests.test_password_hasher import TestPasswordHasher
 
 
-class TestCreateAccount(unittest.TestCase):
+class CreateAccountTester(unittest.TestCase):
   def test_success(self):
     data_store = LocalDataStore()
     server = Server(data_store, TestPasswordHasher())
