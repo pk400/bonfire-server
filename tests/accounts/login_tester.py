@@ -4,8 +4,8 @@ from bonfire.library import exceptions
 from bonfire.library.accounts.local_data_store import LocalDataStore
 from bonfire.library.accounts.server import Server
 from bonfire.library.accounts.session import Session
-from bonfire.library.password_hasher.test_password_hasher import TestPasswordHasher
 from bonfire.library.utils import run_in_loop
+from tests.test_password_hasher import TestPasswordHasher
 
 
 class LoginTester(unittest.TestCase):
