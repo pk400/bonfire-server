@@ -6,9 +6,9 @@ from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 from starlette.testclient import TestClient
 
-from library.jwt import TestJWT
-from library.middleware import SessionMiddleware
-from library.types import MutableSession
+from bonfire.library.jwt import TestJWT
+from bonfire.library.middleware import SessionMiddleware
+from bonfire.library.types import MutableSession
 
 
 class MockSession(MutableSession):

@@ -1,11 +1,11 @@
 import unittest
 
-from library import exceptions
-from library.accounts.local_data_store import LocalDataStore
-from library.accounts.server import Server
-from library.accounts.session import Session
-from library.password_hasher.test_password_hasher import TestPasswordHasher
-from library.utils import run_in_loop
+from bonfire.library import exceptions
+from bonfire.library.accounts.local_data_store import LocalDataStore
+from bonfire.library.accounts.server import Server
+from bonfire.library.accounts.session import Session
+from bonfire.library.password_hasher.test_password_hasher import TestPasswordHasher
+from bonfire.library.utils import run_in_loop
 
 
 class LoginTester(unittest.TestCase):
@@ -18,15 +18,15 @@ class LoginTester(unittest.TestCase):
     self.server.close()
 
   def test_success(self):
-    account_id = run_in_loop(self.server.create_account('a', 'b'))
     session = Session()
+    account_id = run_in_loop(self.server.create_account(session, 'a', 'b'))
     run_in_loop(self.server.login(session, 'a', 'b'))
     self.assertTrue(session.is_modified)
     self.assertEqual(session.id, account_id)
 
   def test_bad_credentials(self):
-    account_id = run_in_loop(self.server.create_account('a', 'b'))
     session = Session()
+    account_id = run_in_loop(self.server.create_account(session, 'a', 'b'))
     run_in_loop(self.server.login(session, 'a', 'b'))
     self.assertTrue(session.is_modified)
     self.assertEqual(session.id, account_id)
