@@ -29,7 +29,7 @@ class AccountsController:
   async def register(self, request):
     params = await request.json()
     account_id = await self._server.create_account(request.session,
-      params['email_address'], params['password'])
+      params['email_address'], params['username'], params['password'])
     return JSONResponse({'account_id': account_id},
       status_code=status.HTTP_201_CREATED)
 
@@ -48,9 +48,9 @@ class AccountsController:
     if 'id' in params:
       account = await self._server.load_account_by_id(request.session,
         params['id'])
-    elif 'email_address' in params:
-      account = await self._server.load_account_by_email_address(
-        request.session, params['email_address'])
+    elif 'username' in params:
+      account = await self._server.load_account_by_username(
+        request.session, params['username'])
     else:
       return Response(status_code=status.HTTP_404_NOT_FOUND)
     return JSONResponse(account.to_json(), status_code=status.HTTP_200_OK)

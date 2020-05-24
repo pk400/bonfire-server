@@ -41,8 +41,9 @@ class LocalDataStore(DataStore):
     pass
 
   @require_open
-  async def store_account(self, account_id, email_address, hashed_password):
-    account = Account(account_id, email_address)
+  async def store_account(self, account_id, email_address, username,
+      hashed_password):
+    account = Account(account_id, email_address, username)
     self._accounts.add(AccountEntry(account, hashed_password))
 
   @require_open
@@ -51,12 +52,12 @@ class LocalDataStore(DataStore):
     return account_entry.account
 
   @require_open
-  async def load_account_id_by_email(self, email_address):
+  async def load_account_id_by_email_address(self, email_address):
     account_entry = self._accounts.get('email_address', email_address)
     return account_entry.account_id
 
   @require_open
-  async def load_account_by_email(self, email_address):
+  async def load_account_by_email_address(self, email_address):
     account_entry = self._accounts.get('email_address', email_address)
     return account_entry.account
 

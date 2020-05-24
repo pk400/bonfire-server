@@ -12,8 +12,8 @@ class WebFingerTester(unittest.TestCase):
     server = accounts.Server(accounts.LocalDataStore(), TestPasswordHasher())
     server.open()
     accounts_client = accounts.LocalClient(server)
-    run_in_loop(accounts_client.create_account('a', 'b'))
-    accounts_client.set_credentials('a', 'b')
+    run_in_loop(accounts_client.create_account('a', 'b', 'c'))
+    accounts_client.set_credentials('a', 'c')
     accounts_client.open()
     controller = WebfingerController(accounts_client)
     with TestClient(controller.asgi_app) as client:

@@ -22,9 +22,9 @@ class Server(ServiceType):
     self._data_store.close()
 
   @require_open
-  async def create_account(self, session, email_address, password):
+  async def create_account(self, session, email_address, username, password):
     account_id = self._account_id_generator.generate()
-    await self._data_store.store_account(account_id, email_address,
+    await self._data_store.store_account(account_id, email_address, username,
       self._password_hasher.hash_password(password))
     return account_id
 
@@ -33,7 +33,8 @@ class Server(ServiceType):
     if session != Session.EMPTY:
       raise exceptions.SessionLoggedInException(
         'Session is already logged in.', Server.SESSION_LOGGED_IN)
-    account_id = await self._data_store.load_account_id_by_email(email_address)
+    account_id = \
+      await self._data_store.load_account_id_by_email_address(email_address)
     hashed_password = await self._data_store.load_password(account_id)
     is_password_validated = self._password_hasher.check_password(password,
       hashed_password)
@@ -52,6 +53,6 @@ class Server(ServiceType):
     return account
 
   @require_open
-  async def load_account_by_email(self, session, email_address):
-    account = await self._data_store.load_account_by_email(email_address)
+  async def load_account_by_email(self, session, username):
+    account = await self._data_store.load_account_by_email(username)
     return account

@@ -19,19 +19,21 @@ class LoginTester(unittest.TestCase):
 
   def test_success(self):
     session = Session()
-    account_id = run_in_loop(self.server.create_account(session, 'a', 'b'))
-    run_in_loop(self.server.login(session, 'a', 'b'))
+    account_id = run_in_loop(
+      self.server.create_account(session, 'a', 'b', 'c'))
+    run_in_loop(self.server.login(session, 'a', 'c'))
     self.assertTrue(session.is_modified)
     self.assertEqual(session.id, account_id)
 
   def test_bad_credentials(self):
     session = Session()
-    account_id = run_in_loop(self.server.create_account(session, 'a', 'b'))
-    run_in_loop(self.server.login(session, 'a', 'b'))
+    account_id = run_in_loop(
+      self.server.create_account(session, 'a', 'b', 'c'))
+    run_in_loop(self.server.login(session, 'a', 'c'))
     self.assertTrue(session.is_modified)
     self.assertEqual(session.id, account_id)
     with self.assertRaises(exceptions.SessionLoggedInException):
-      run_in_loop(self.server.login(session, 'a', 'b'))
+      run_in_loop(self.server.login(session, 'a', 'c'))
 
 
 if __name__ == '__main__':

@@ -62,7 +62,7 @@ class WebfingerController:
     data = await resource_handler(value, rels)
     return JSONResponse(data.to_json())
 
-  async def acct_handler(self, email_address, rels):
-    account = await self._accounts_client.load_account_by_email(email_address)
-    jrd = JRD(account.email_address)
+  async def acct_handler(self, username, rels):
+    account = await self._accounts_client.load_account_by_email(username)
+    jrd = JRD(account.username)
     return jrd

@@ -1,14 +1,14 @@
 class Client:
-  async def create_account(self, email_address, password):
+  async def create_account(self, username, password):
     pass
 
   async def load_account_by_id(self, account_id):
     pass
 
-  async def load_account_by_email(self, email_address):
+  async def load_account_by_email(self, username):
     pass
 
-  def set_credentials(self, email_address, password):
+  def set_credentials(self, username, password):
     pass
 
   def open(self):

@@ -13,10 +13,11 @@ class CreateAccountTester(unittest.TestCase):
     server = Server(data_store, TestPasswordHasher())
     server.open()
     session = Session()
-    account_id = run_in_loop(server.create_account(session, 'a', 'b'))
-    account = run_in_loop(data_store.load_account(account_id))
+    account_id = run_in_loop(server.create_account(session, 'a', 'b', 'c'))
+    account = run_in_loop(data_store.load_account_by_id(account_id))
     self.assertEqual(account.id, 0)
     self.assertEqual(account.email_address, 'a')
+    self.assertEqual(account.username, 'b')
     server.close()
 
 
