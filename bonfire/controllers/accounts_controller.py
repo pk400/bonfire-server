@@ -7,16 +7,14 @@ from starlette.responses import JSONResponse, Response
 from bonfire.library.middleware.session_middleware import SessionMiddleware
 
 
-class ApplicationController:
+class AccountsController:
   def __init__(self, server, jwt):
     self._server = server
     self._jwt = jwt
     routes = [
-      Mount('/api/accounts', routes=[
-        Route('/register', self.register, methods=['POST']),
-        Route('/login', self.login, methods=['POST']),
-        Route('/logout', self.logout, methods=['POST'])
-      ])
+      Route('/register', self.register, methods=['POST']),
+      Route('/login', self.login, methods=['POST']),
+      Route('/logout', self.logout, methods=['POST'])
     ]
     middleware = [
       Middleware(SessionMiddleware, cookie_name='session_id', jwt=jwt)

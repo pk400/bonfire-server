@@ -15,9 +15,11 @@ class ServiceType:
     raise NotImplementedError()
 
   def open(self):
-    self.startup()
-    self._is_open = True
+    if not self._is_open:
+      self.startup()
+      self._is_open = True
 
   def close(self):
-    self.shutdown()
-    self._is_open = False
+    if self._is_open:
+      self.shutdown()
+      self._is_open = False
