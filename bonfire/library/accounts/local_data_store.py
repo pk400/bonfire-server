@@ -1,7 +1,7 @@
-from bonfire.library.accounts.account import Account
 from bonfire.library.accounts.data_store import DataStore
 from bonfire.library.multi_key_dict import MultiKeyDict
 from bonfire.library.utils import require_open
+from bonfire.models import Account
 
 
 class AccountEntry:

@@ -1,4 +1,4 @@
-from activitypub.object import Object
+from bonfire.models.object import Object
 
 
 class Actor(Object):
