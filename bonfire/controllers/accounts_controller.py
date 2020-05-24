@@ -1,7 +1,7 @@
 from starlette import status
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
-from starlette.routing import Mount, Route
+from starlette.routing import Route
 from starlette.responses import JSONResponse, Response
 
 from bonfire.library.middleware.session_middleware import SessionMiddleware
@@ -14,7 +14,8 @@ class AccountsController:
     routes = [
       Route('/register', self.register, methods=['POST']),
       Route('/login', self.login, methods=['POST']),
-      Route('/logout', self.logout, methods=['POST'])
+      Route('/logout', self.logout, methods=['POST']),
+      Route('/load_account', self.load_account, methods=['POST'])
     ]
     middleware = [
       Middleware(SessionMiddleware, cookie_name='session_id', jwt=jwt)
@@ -41,3 +42,15 @@ class AccountsController:
   async def logout(self, request):
     await self._server.logout(request.session)
     return Response(status_code=status.HTTP_200_OK)
+
+  async def load_account(self, request):
+    params = await request.json()
+    if 'id' in params:
+      account = await self._server.load_account_by_id(request.session,
+        params['id'])
+    elif 'email_address' in params:
+      account = await self._server.load_account_by_email_address(
+        request.session, params['email_address'])
+    else:
+      return Response(status_code=status.HTTP_404_NOT_FOUND)
+    return JSONResponse(account.to_json(), status_code=status.HTTP_200_OK)

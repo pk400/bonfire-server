@@ -45,3 +45,13 @@ class Server(ServiceType):
   @require_open
   async def logout(self, session):
     session.reset_credentials()
+
+  @require_open
+  async def load_account_by_id(self, session, account_id):
+    account = await self._data_store.load_account_by_id(account_id)
+    return account
+
+  @require_open
+  async def load_account_by_email(self, session, email_address):
+    account = await self._data_store.load_account_by_email(email_address)
+    return account
