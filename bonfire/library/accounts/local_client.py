@@ -11,16 +11,16 @@ class LocalClient(Client):
     self._password = None
     self._is_open = False
 
-  async def create_account(self, username, password):
-    return await self._server.create_account(self._session, username,
-      password)
+  async def create_account(self, email_address, username, password):
+    return await self._server.create_account(self._session, email_address,
+      username, password)
 
   async def load_account_by_id(self, account_id):
     return await self._server.load_account_by_id(self._session, account_id)
 
-  async def load_account_by_email(self, username):
-    return await self._server.load_account_by_email(self._session,
-      username)
+  async def load_account_by_email_address(self, email_address):
+    return await self._server.load_account_by_email_address(self._session,
+      email_address)
 
   def set_credentials(self, username, password):
     self._username = username

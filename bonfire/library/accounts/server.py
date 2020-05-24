@@ -53,6 +53,7 @@ class Server(ServiceType):
     return account
 
   @require_open
-  async def load_account_by_email(self, session, username):
-    account = await self._data_store.load_account_by_email(username)
+  async def load_account_by_email_address(self, session, email_address):
+    account = \
+      await self._data_store.load_account_by_email_address(email_address)
     return account

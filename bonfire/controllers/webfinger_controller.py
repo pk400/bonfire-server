@@ -3,32 +3,10 @@ from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 
-
-class Link:
-  def __init__(self, rel, __type=None, href=None, titles={}):
-    self._rel = rel
-    self._type = __type
-    self._href = href
-    self._titles = titles
+from bonfire.models.jrd import JRD
 
 
-class JRD:
-  def __init__(self, subject, aliases=[], properties={}, links=[]):
-    self._subject = subject
-    self._aliases = aliases
-    self._properties = properties
-    self._links = links
-
-  def to_json(self):
-    return {
-      'subject': self._subject,
-      'aliases': self._aliases,
-      'properties': self._properties,
-      'links': self._links
-    }
-
-
-class WebfingerController:
+class WebFingerController:
   def __init__(self, accounts_client):
     self._accounts_client = accounts_client
     self._supported_uris = {
@@ -62,7 +40,8 @@ class WebfingerController:
     data = await resource_handler(value, rels)
     return JSONResponse(data.to_json())
 
-  async def acct_handler(self, username, rels):
-    account = await self._accounts_client.load_account_by_email(username)
-    jrd = JRD(account.username)
+  async def acct_handler(self, email_address, rels):
+    account = \
+      await self._accounts_client.load_account_by_email_address(email_address)
+    jrd = JRD(account.email_address)
     return jrd

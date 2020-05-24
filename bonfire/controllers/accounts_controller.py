@@ -48,9 +48,9 @@ class AccountsController:
     if 'id' in params:
       account = await self._server.load_account_by_id(request.session,
         params['id'])
-    elif 'username' in params:
+    elif 'email_address' in params:
       account = await self._server.load_account_by_username(
-        request.session, params['username'])
+        request.session, params['email_address'])
     else:
       return Response(status_code=status.HTTP_404_NOT_FOUND)
     return JSONResponse(account.to_json(), status_code=status.HTTP_200_OK)

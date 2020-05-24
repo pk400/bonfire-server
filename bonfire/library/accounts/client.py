@@ -1,5 +1,5 @@
 class Client:
-  async def create_account(self, username, password):
+  async def create_account(self, email_address, username, password):
     pass
 
   async def load_account_by_id(self, account_id):
