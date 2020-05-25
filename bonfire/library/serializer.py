@@ -14,6 +14,8 @@ class Serializer:
         return obj
       if isinstance(obj, dict):
         return Serializer.dict_to_json(obj)
+      if isinstance(obj, list):
+        return Serializer.list_to_json(obj)
       raise SerializerNotSupported(
         f'{obj.__class__.__name__} does not implement to_json.',
         Serializer.UNSUPPORTED_SERIALIZATION)
@@ -21,6 +23,10 @@ class Serializer:
   @staticmethod
   def dict_to_json(obj):
     return {key: Serializer.to_json(value) for key, value in obj.items()}
+
+  @staticmethod
+  def list_to_json(obj):
+    return [Serializer.to_json(value) for value in obj]
 
   @staticmethod
   def from_json(obj, definition):

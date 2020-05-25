@@ -2,8 +2,10 @@ from bonfire.models.object import Object
 
 
 class Actor(Object):
-  inbox = None
-  outbox = None
+  def __init__(self, inbox, outbox):
+    self._inbox = inbox
+    self._outbox = outbox
+
   following = None
   followers = None
   liked = None

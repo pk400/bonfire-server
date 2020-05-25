@@ -1,9 +1,13 @@
 from starlette import status
 from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 
+from bonfire.library.serializer import Serializer
 from bonfire.models.jrd import JRD
+from bonfire.models.link import Link
 
 
 class WebFingerController:
@@ -18,7 +22,10 @@ class WebFingerController:
     routes = [
       Route('/webfinger', self.webfinger, methods=['GET'])
     ]
-    self._asgi_app = Starlette(routes=routes)
+    middleware = [
+      Middleware(CORSMiddleware, allow_origins=['*'])
+    ]
+    self._asgi_app = Starlette(routes=routes, middleware=middleware)
 
   @property
   def asgi_app(self):
@@ -38,10 +45,15 @@ class WebFingerController:
       for x in query_params.getlist('rel'):
         rels.append(('rel', x))
     data = await resource_handler(value, rels)
-    return JSONResponse(data.to_json())
+    return JSONResponse(Serializer.to_json(data))
 
   async def acct_handler(self, email_address, rels):
+    username, host = email_address.split('@')
     account = \
-      await self._accounts_client.load_account_by_email_address(email_address)
-    jrd = JRD(account.email_address)
-    return jrd
+      await self._accounts_client.load_account_by_email_address(username)
+    return JRD('acct:' + email_address, links=[
+      Link('http://webfinger.net/rel/profile-page', 'text/html',
+        'https://cybre.space/@isazhi'),
+      Link('self', 'application/activity+json',
+        f'https://{host}/api/accounts/actor')
+    ])

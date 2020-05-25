@@ -5,6 +5,7 @@ from starlette.routing import Route
 from starlette.responses import JSONResponse, Response
 
 from bonfire.library.middleware.session_middleware import SessionMiddleware
+from bonfire.models.actor import Actor
 
 
 class AccountsController:
@@ -15,7 +16,8 @@ class AccountsController:
       Route('/register', self.register, methods=['POST']),
       Route('/login', self.login, methods=['POST']),
       Route('/logout', self.logout, methods=['POST']),
-      Route('/load_account', self.load_account, methods=['POST'])
+      Route('/load_account', self.load_account, methods=['POST']),
+      Route('/actor', self.actor, methods=['GET'])
     ]
     middleware = [
       Middleware(SessionMiddleware, cookie_name='session_id', jwt=jwt)
@@ -54,3 +56,18 @@ class AccountsController:
     else:
       return Response(status_code=status.HTTP_404_NOT_FOUND)
     return JSONResponse(account.to_json(), status_code=status.HTTP_200_OK)
+
+  async def actor(self, request):
+
+
+    return JSONResponse({
+      "@context": [
+        "https://www.w3.org/ns/activitystreams",
+        "https://w3id.org/security/v1"
+      ],
+
+      "id": "https://983c4a97.ngrok.io/api/accounts/actor",
+      "type": "Person",
+      "preferredUsername": "joel",
+      "inbox": "https://my-example.com/inbox",
+    })

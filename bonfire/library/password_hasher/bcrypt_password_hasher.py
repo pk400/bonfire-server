@@ -15,5 +15,5 @@ class BcryptPasswordHasher(PasswordHasher):
     return bcrypt.hashpw(plaintext_password.encode(self._encoding), self._salt)
 
   def check_password(self, plaintext_password: str, hashed_password: bytes):
-    return bcrypt.checkpw(plaintext_password.decode(self._encoding),
+    return bcrypt.checkpw(plaintext_password.encode(self._encoding),
       hashed_password)
