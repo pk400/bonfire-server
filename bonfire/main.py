@@ -1,6 +1,4 @@
 from starlette.applications import Starlette
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
 from starlette.routing import Mount
 import uvicorn
 
@@ -29,10 +27,7 @@ def main():
     Mount('/api/accounts', accounts_controller.asgi_app),
     Mount('/.well-known', webfinger_controller.asgi_app)
   ]
-  middleware = [
-    Middleware(CORSMiddleware, allow_origins=['*'])
-  ]
-  app = Starlette(routes=routes, middleware=middleware)
+  app = Starlette(routes=routes)
   uvicorn.run(app)
 
 
