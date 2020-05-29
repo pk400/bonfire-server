@@ -1,0 +1,133 @@
+body, div, h1, h2, h3, h4, h5, h6, ul {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #EEEEEE;
+  width: 1000px;
+  margin: 0 auto;
+  font-family: "Open sans";
+}
+
+header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.header-container {
+  width: 1000px;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.content-box {
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.form-group {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.form-group label {
+  display: inline-block;
+  text-align: right;
+  width: 30%;
+  padding-right: 20px;
+}
+
+.form-group input {
+  display: inline-block;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 18px;
+}
+
+.page-title {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #2F2F2F;
+}
+
+.submit-btn {
+  color: #FFFFFF;
+  background: rgb(75, 75, 75);
+  font-weight: bold;
+  padding: 15px;
+}
+
+.submit-btn:hover {
+  background: #2F2F2F;
+}
+
+.content-wrapper {
+  text-align: center;
+}
+
+.left-content, .middle-content, .right-content {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 25%;
+  text-align: left;
+}
+
+.left-content {
+  padding-right: 20px;
+}
+
+.right-content {
+  padding-left: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav li {
+  margin-bottom: 20px;
+}
+
+nav a:link {
+  color: #2F2F2F;
+  font-weight: bold;
+  font-size: 18px;
+  background: #FFFFFF;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  display: block;
+}
+
+nav a:visited {
+  color: #2F2F2F;
+  border: 1px solid #CCCCCC;
+}
+
+nav a:hover {
+  background: #EEEEEE;
+}
+
+.form-info {
+  display: block;
+  color: #aaa;
+}

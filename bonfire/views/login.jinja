@@ -1,0 +1,24 @@
+{% extends 'base.jinja' %}
+{% block title %}Login{% endblock %}
+{% block pre_scripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}
+{% block middle_content %}
+<div class="content-box p-20">
+  <h1 class="page-title">Login</h1>
+  <form onsubmit="return on_login(this, '{{ url_for('api:accounts:login') }}');">
+    <div class="form-group">
+      <label for="email_address">Email Address</label><input type="text" id="email_address" name="email_address" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label><input type="password" id="password" name="password" required />
+    </div>
+    <div class="form-group">
+      <input class="submit-btn" type="submit" value="Login">
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block post_scripts %}
+<script type="text/javascript" src="{{ url_for('static', path='/scripts/login.js') }}"></script>
+{% endblock %}
